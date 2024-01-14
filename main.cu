@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#include "matrixfunctions.hpp"
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         std::cout << "Matrix size is required." << std::endl;
@@ -18,6 +20,12 @@ int main(int argc, char* argv[]) {
     float* a = (float*)malloc(bytes);
     float* b = (float*)malloc(bytes);
     float* c = (float*)malloc(bytes);
+
+    generate_matrix(a, N);
+    generate_matrix(b, N);
+
+    mmul_cpu(a, b, c, N);
+    validate(a, b, c, N);
 
     free(a);
     free(b);
