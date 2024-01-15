@@ -42,9 +42,9 @@ void run_mmul_naive(float* a, float* b, float* c, int N){
 
 void run_mmul_coalesced(float* a, float* b, float* c, int N){
     dim3 gridsize((N + 31) / 32, (N + 31) / 32);
-    dim3 blocksize(32, 32);
+    dim3 blocksize(32 * 32);
 
-    mmul_coalesced_v2<<<gridsize, blocksize>>>(a, b, c, N);
+    mmul_coalesced<<<gridsize, blocksize>>>(a, b, c, N);
 }
 
 void run_mmul_coalesced_v2(float* a, float* b, float* c, int N){
@@ -52,4 +52,11 @@ void run_mmul_coalesced_v2(float* a, float* b, float* c, int N){
     dim3 blocksize(32, 32);
 
     mmul_coalesced_v2<<<gridsize, blocksize>>>(a, b, c, N);
+}
+
+void run_mmul_cacheblock(float* a, float* b, float* c, int N){
+    dim3 gridsize((N + 31) / 32, (N + 31) / 32);
+    dim3 blocksize(32 * 32);
+
+    mmul_cacheblock<<<gridsize, blocksize>>>(a, b, c, N);
 }
