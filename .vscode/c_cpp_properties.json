@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/local/cuda-12.3/targets/x86_64-linux/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

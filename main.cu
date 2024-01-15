@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "matrixfunctions.hpp"
+#include "run_kernel.cuh"
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -21,10 +22,18 @@ int main(int argc, char* argv[]) {
     float* b = (float*)malloc(bytes);
     float* c = (float*)malloc(bytes);
 
+    float* dev_a, * dev_b, * dev_c;
+    cudaMalloc((void**)&dev_a, bytes);
+    cudaMalloc((void**)&dev_b, bytes);
+    cudaMalloc((void**)&dev_c, bytes);
+
     generate_matrix(a, N);
     generate_matrix(b, N);
+    cudaMemcpy(dev_a, a, bytes, cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_b, b, bytes, cudaMemcpyHostToDevice);
 
-    mmul_cpu(a, b, c, N);
+    // mmul_cpu(a, b, c, N);
+    mmul_benchmark(run_mmul_naive, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
     validate(a, b, c, N);
 
     free(a);
