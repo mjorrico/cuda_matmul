@@ -15,7 +15,9 @@ void mmul_benchmark(mmulFunc mmul, float* dev_a, float* dev_b, float* dev_c, flo
 
     for (int i = 0; i < 10; i++) {
         cudaEventRecord(start);
+
         mmul(dev_a, dev_b, dev_c, N);
+
         cudaDeviceSynchronize();
         cudaEventRecord(stop);
         cudaEventSynchronize(stop);
@@ -32,9 +34,22 @@ void mmul_benchmark(mmulFunc mmul, float* dev_a, float* dev_b, float* dev_c, flo
 }
 
 void run_mmul_naive(float* a, float* b, float* c, int N){
-
     dim3 gridsize((N + 31) / 32, (N + 31) / 32);
     dim3 blocksize(32, 32);
 
     mmul_naive<<<gridsize, blocksize>>>(a, b, c, N);
+}
+
+void run_mmul_coalesced(float* a, float* b, float* c, int N){
+    dim3 gridsize((N + 31) / 32, (N + 31) / 32);
+    dim3 blocksize(32, 32);
+
+    mmul_coalesced_v2<<<gridsize, blocksize>>>(a, b, c, N);
+}
+
+void run_mmul_coalesced_v2(float* a, float* b, float* c, int N){
+    dim3 gridsize((N + 31) / 32, (N + 31) / 32);
+    dim3 blocksize(32, 32);
+
+    mmul_coalesced_v2<<<gridsize, blocksize>>>(a, b, c, N);
 }

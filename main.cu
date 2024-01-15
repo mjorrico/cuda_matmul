@@ -33,9 +33,15 @@ int main(int argc, char* argv[]) {
     cudaMemcpy(dev_b, b, bytes, cudaMemcpyHostToDevice);
 
     // mmul_cpu(a, b, c, N);
-    mmul_benchmark(run_mmul_naive, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    // mmul_benchmark(run_mmul_naive, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    mmul_benchmark(run_mmul_coalesced_v2, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    validate(a, b, c, N);
+    mmul_benchmark(run_mmul_coalesced_v2, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
     validate(a, b, c, N);
 
+    cudaFree(dev_a);
+    cudaFree(dev_b);
+    cudaFree(dev_c);
     free(a);
     free(b);
     free(c);
