@@ -60,3 +60,10 @@ void run_mmul_cacheblock(float* a, float* b, float* c, int N){
 
     mmul_cacheblock<<<gridsize, blocksize>>>(a, b, c, N);
 }
+
+void run_mmul_cacheblock_v2(float* a, float* b, float* c, int N){
+    dim3 gridsize((N + 31) / 32, (N + 31) / 32);
+    dim3 blocksize(32, 32);
+
+    mmul_cacheblock_v2<<<gridsize, blocksize>>>(a, b, c, N);
+}

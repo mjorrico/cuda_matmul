@@ -40,6 +40,8 @@ int main(int argc, char* argv[]) {
     validate(a, b, c, N);
     mmul_benchmark(run_mmul_cacheblock, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
     validate(a, b, c, N);
+    mmul_benchmark(run_mmul_cacheblock_v2, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    validate(a, b, c, N);
 
     cudaFree(dev_a);
     cudaFree(dev_b);
