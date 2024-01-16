@@ -1,7 +1,7 @@
 # Compiler and flags
 NVCC := nvcc
 GCC := g++
-LDFLAGS := -lcudart
+LDFLAGS := -lcudart -lcublas
 
 # Directories
 SRC_DIR := src
