@@ -32,15 +32,13 @@ int main(int argc, char* argv[]) {
     cudaMemcpy(dev_a, a, bytes, cudaMemcpyHostToDevice);
     cudaMemcpy(dev_b, b, bytes, cudaMemcpyHostToDevice);
 
-    // mmul_cpu(a, b, c, N);
-    // mmul_benchmark(run_mmul_naive, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    mmul_benchmark(run_mmul_naive, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
     mmul_benchmark(run_mmul_coalesced, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
-    validate(a, b, c, N);
     mmul_benchmark(run_mmul_coalesced_v2, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
-    validate(a, b, c, N);
     mmul_benchmark(run_mmul_cacheblock, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
-    validate(a, b, c, N);
     mmul_benchmark(run_mmul_cacheblock_v2, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    mmul_benchmark(run_mmul_blocktiling1d, dev_a, dev_b, dev_c, c, N, gflop, memoryio);
+    
     validate(a, b, c, N);
 
     cudaFree(dev_a);

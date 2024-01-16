@@ -4,7 +4,7 @@
 #include <math.h>
 
 void print_matrix(float* matrix, int N, int precision) {
-    if (N > 10) {
+    if (N > 16) {
         std::cout << "Matrix is too big. Can't be printed." << std::endl;
         return;
     }

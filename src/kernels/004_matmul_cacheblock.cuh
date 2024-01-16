@@ -1,3 +1,6 @@
+#ifndef MATMUL_CACHEBLOCK_H
+#define MATMUL_CACHEBLOCK_H
+
 #include <cuda.h>
 #include <cuda_runtime_api.h>
 #include <device_launch_parameters.h>
@@ -33,3 +36,5 @@ __global__ void mmul_cacheblock(float* a, float* b, float* c, int N) {
 
     c[threadRow * N + threadCol] = temp;
 }
+
+#endif
